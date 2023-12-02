@@ -13,21 +13,21 @@ def encrypt(input_file, key):
     with open(input_file, 'rb') as file:
         file_data = file.read()
         encrypted = f.encrypt(file_data)
-    with open(input_file + '.encrypted', 'wb') as file:
         file.write(encrypted)
+        return file
 
 def decrypt(input_file, key):
     f = Fernet(key)
     with open(input_file, 'rb') as file:
         encrypted = file.read()
         decrypted = f.decrypt(encrypted)
-    with open(input_file + '.decrypted', 'wb') as file:
         file.write(decrypted)
-
-# Esempio di utilizzo
+        return file
+        
 password = "123456"
 salt = secrets.token_bytes(16)
 key = generate_key(password, salt)
 
 encrypt('file.txt', key)
-decrypt('file.txt.encrypted', key)
+or
+decrypt('file.txt', key)
