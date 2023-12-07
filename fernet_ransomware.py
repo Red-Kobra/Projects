@@ -22,19 +22,19 @@ def find_files(file_type):
                 yield filename
 
 def encrypt(filename, key):
-    generate_key(password)
+    k = generate_key(password)
     with open(filename, 'rb') as file:
         file_data = file.read()
-        encrypted = f.encrypt(file_data)
+        encrypted = k.encrypt(file_data)
     with open(filename, 'wb') as file:
         file.write(encrypted)
 
 def decrypt(filename, key):
-    generate_key(password)
+    k = generate_key(password)
     with open(filename, 'rb') as file:
         encrypted = file.read
     try:
-        decrypted = f.decrypt(encrypted)
+        decrypted = k.decrypt(encrypted)
     except cryptography.fernet.InvalidToken as e:
         print(f"Invalid token, {e} ")
         return
@@ -60,7 +60,6 @@ if __name__ == "__main__":
             decrypt(filename, key)
     else:
         raise TypeError("Either --encrypt or --decrypt must be specified.")
-
 
 
 
