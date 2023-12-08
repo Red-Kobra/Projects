@@ -1,10 +1,3 @@
-import cryptography
-from cryptography.fernet import Fernet
-
-import hashlib
-import os
-import secrets
-import getpass
 import argparse
 import base64
 
@@ -23,22 +16,20 @@ def find_files(file_type):
                 yield full_path
 
 def encrypt(filename, key):
-    k = generate_key(password)
     try:
         with open(filename, 'rb') as file:
             file_data = file.read()
-            encrypted = k.encrypt(file_data)
+            encrypted = key.encrypt(file_data)
         with open(filename, 'wb') as file:
             file.write(encrypted)
     except PermissionError as e:
         pass
 
 def decrypt(filename, key):
-    k = generate_key(password)
     try:
         with open(filename, 'rb') as file:
             encrypted = file.read()
-            decrypted = k.decrypt(encrypted)
+            decrypted = key.decrypt(encrypted)
         with open(filename, 'wb') as file:
             file.write(decrypted)
     except PermissionError as e:
@@ -66,6 +57,7 @@ if __name__ == "__main__":
             decrypt(filename, key)
     else:
         raise TypeError("Either --encrypt or --decrypt must be specified.")
+
 
 
 
